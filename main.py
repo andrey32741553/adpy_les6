@@ -15,12 +15,6 @@ class GetArticlesFromHabr:
         bs = BeautifulSoup(response.text, 'html.parser')
         class_element = bs.find_all('article', {'class': 'post'})
         for article in class_element:
-            # hubs = article.find_all('a', {'class': 'hub-link'})
-            # print(hubs)
-            # hubs_list = []
-            # for hub in hubs:
-            #     hubs_list.append(hub.text)
-            # print(hubs_list)
             hubs = set(map(lambda hub: hub.text, article.find_all('a', {'class': 'hub-link'})))
             if target_keywords.intersection(hubs):
                 title_el = article.find('a', {'class': 'post__title_link'})
