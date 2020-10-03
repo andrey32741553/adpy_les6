@@ -20,7 +20,11 @@ class GetArticlesFromHabr:
             title = title_el.text
             title_list = title.split(' ')
             word_in_title = set([word.capitalize().strip('.,;:?!"()') for word in title_list])
-            if target_keywords.intersection(hubs) or target_keywords.intersection(word_in_title):
+            preview_text = article.find('div', {'class': 'post__text'}).text
+            preview_list = preview_text.split(' ')
+            preview_words = set([word.capitalize().strip('.,;:!?"()') for word in preview_list])
+            if target_keywords.intersection(hubs) or target_keywords.intersection(word_in_title)\
+                    or target_keywords.intersection(preview_words):
                 time_el = article.find('span', {'class': 'post__time'})
                 time = time_el.text
                 self.title_link = title_el.attrs.get('href')
